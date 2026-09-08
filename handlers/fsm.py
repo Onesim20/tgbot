@@ -14,12 +14,7 @@ class TrialLesson(StatesGroup):
 router_fsm = Router()
 
 
-# /cancel должен стоять ВЫШЕ хендлеров со стадиями —
-# иначе, если пользователь в состоянии TrialLesson.name напишет "/cancel",
-# это сообщение поймает хендлер form_name и запишет "/cancel" как имя,
-# а не хендлер отмены.
-@router_fsm.message(Command('cancel'))
-async def cancel_handler(message: Message, state: FSMContext):
+
     current_state = await state.get_state()
     if current_state is None:
         await message.answer('Сейчас нечего отменять.')
