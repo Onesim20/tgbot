@@ -36,7 +36,8 @@ async def help_handler(message: Message):
         '/time — текущая дата и время\n'
         '/random — случайное число от 1 до 100\n'
         '/joke — случайная шутка\n'
-        '/form — заполнение анкеты'
+        '/form — заполнение анкеты\n'
+        '/records- — список записей на пробное занятие\n'
     )
     await bot.send_message(chat_id=message.chat.id, text=text)
 

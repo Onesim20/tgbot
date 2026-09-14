@@ -1,3 +1,4 @@
+from database import queries
 from aiogram import Router
 from aiogram.types import Message
 from aiogram.filters import Command
@@ -14,10 +15,7 @@ class TrialLesson(StatesGroup):
 router_fsm = Router()
 
 
-# /cancel должен стоять ВЫШЕ хендлеров со стадиями —
-# иначе, если пользователь в состоянии TrialLesson.name напишет "/cancel",
-# это сообщение поймает хендлер form_name и запишет "/cancel" как имя,
-# а не хендлер отмены.
+
 @router_fsm.message(Command('cancel'))
 async def cancel_handler(message: Message, state: FSMContext):
     current_state = await state.get_state()
@@ -62,6 +60,8 @@ async def form_age(message: Message, state: FSMContext):
 async def form_phone(message: Message, state: FSMContext):
     data = await state.update_data(phone=message.text)
 
+    queries.add_trial_lesson(name=data["name"], age=data["age"], phone=data["phone"])
+
     await message.answer(
         'Запись оформлена!\n\n'
         f'Имя: {data["name"]}\n'
@@ -69,3 +69,13 @@ async def form_phone(message: Message, state: FSMContext):
         f'Телефон: {data["phone"]}'
     )
     await state.clear()
+
+@router_fsm.message(Command('records'))
+async def records_handler(message: Message):
+    records = queries.get_all_trial_lessons()
+    if not records:
+        await message.answer('Записей пока нет.')
+        return
+
+    lines = [f"{i}. {name}, {age} лет, тел. {phone}" for i, name, age, phone in records]
+    await message.answer('\n'.join(lines))
