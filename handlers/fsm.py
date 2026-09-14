@@ -1,9 +1,10 @@
-from database import queries
 from aiogram import Router
 from aiogram.types import Message
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
+
+from database import queries
 
 
 class TrialLesson(StatesGroup):
@@ -13,7 +14,6 @@ class TrialLesson(StatesGroup):
 
 
 router_fsm = Router()
-
 
 
 @router_fsm.message(Command('cancel'))
@@ -69,6 +69,7 @@ async def form_phone(message: Message, state: FSMContext):
         f'Телефон: {data["phone"]}'
     )
     await state.clear()
+
 
 @router_fsm.message(Command('records'))
 async def records_handler(message: Message):
