@@ -11,7 +11,7 @@ class AddProduct(StatesGroup):
     name = State()
     price = State()
     description = State()
-    product_id = State()   # артикул — общее поле для JOIN
+    product_id = State()   
     category = State()
 
 
