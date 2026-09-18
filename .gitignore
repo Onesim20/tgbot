@@ -1,3 +1,6 @@
 .venv/
 .env
 __pycache__/
+shop.db
+trial_lessons.db
+*.db

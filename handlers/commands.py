@@ -38,6 +38,7 @@ async def help_handler(message: Message):
         '/joke — случайная шутка\n'
         '/form — заполнение анкеты\n'
         '/records- — список записей на пробное занятие\n'
+        '/products — список товаров (JOIN)\n'
     )
     await bot.send_message(chat_id=message.chat.id, text=text)
 

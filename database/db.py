@@ -1,14 +1,18 @@
 import sqlite3
 from pathlib import Path
 
+
+
+
 DB_PATH = Path(__file__).parent / "trial_lessons.db"
 
 
-def get_connection() -> sqlite3.Connection:
+
+def get_connection():
     return sqlite3.connect(DB_PATH)
 
 
-def create_table() -> None:
+def create_table():
     with get_connection() as conn:
         conn.execute(
             """

@@ -6,6 +6,7 @@ from aiogram.types import BotCommand
 
 from config import bot, dp, Admin
 from database.db import create_table
+from database import main_db          
 from handlers import commands, echo, fsm_add_products, fsm
 
 async def set_commands() -> None:
@@ -17,13 +18,16 @@ async def set_commands() -> None:
         BotCommand(command='add_product', description='заполнения нового товара'),
         BotCommand(command='form', description='заполнение анкеты'),
         BotCommand(command='records', description='список записей на пробное занятие'),
+        BotCommand(command='products', description='список товаров (JOIN)'),
     ]
     await bot.set_my_commands(bot_commands)
 
 
 async def on_startup(bot: Bot) -> None:
     create_table()
+    await main_db.init_products_db() 
     await set_commands()
+
     for admin_id in Admin:
         await bot.send_message(chat_id=admin_id, text='Бот включен!')
 
