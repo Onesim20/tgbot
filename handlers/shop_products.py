@@ -13,7 +13,7 @@ class AddProduct(StatesGroup):
     name = State()
     price = State()
     description = State()
-    product_id = State()   # артикул
+    product_id = State()   
     category = State()
     photo = State()
 
